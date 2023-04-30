@@ -9,6 +9,13 @@ const router = express.Router()
 router.route("/top-cheap-tour")
 .get(tourController.aliasTopTours, tourController.getTours)
 
+router.route("/monthly-plan/:year")
+.get(tourController.getMonthlyPlan)
+
+
+router.route("/tour-stats")
+.get(tourController.getTourStats)
+
 router.route("/")
 .get(tourController.getTours)
 .post(tourController.createTour)
