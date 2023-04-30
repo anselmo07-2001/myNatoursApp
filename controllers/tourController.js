@@ -1,6 +1,9 @@
 const fs = require("fs")
 const Tour = require("../model/tourModel")
 const APIFeatures = require("../utils/apiFeature")
+const AppError = require("../utils/appError")
+const catchAsync = require("../utils/catchAsync")
+
 
 exports.aliasTopTours = (req,res,next) => {
     req.query.limit = 5,
@@ -10,7 +13,7 @@ exports.aliasTopTours = (req,res,next) => {
 }
 
 
-exports.getTours = async(req,res) => {     
+exports.getTours = catchAsync(async(req,res,next) => {     
     const feature = new APIFeatures(Tour, req.query)
                             .filter()
                             .sort()
@@ -18,51 +21,41 @@ exports.getTours = async(req,res) => {
                             .paginate()
 
     const tours = await feature.queryObject
-
-    try {
-        res.status(200).json({
+    res.status(200).json({
             status: "success",
             result: tours.length,
             data: {
                 tours
             }
-        })
-    }
-    catch(err) {
-        res.status(500).json({
-            status: "error",
-            message: `Something went wrong ${err}`
-        })
-    }
+    })
     
-}
+})
 
-exports.getTour = async (req,res) => {
-    try {
+exports.getTour = catchAsync(async (req,res,next) => {
         const tour = await Tour.findById(req.params.id)
+
+        if (!tour) {
+            return next(new AppError("No tour found with the Id", 404))
+        }
+
         res.status(200).json({
             status: "success",
             data: {
                 tour: tour
             }
         })
-    }
-    catch(err) {
-        res.status(500).json({
-            status: "error",
-            message: `Something went wrong ${err}`
-        })
-    }
+})
 
-}
-
-exports.updateTour = async (req,res) => {
-
-    try {
+exports.updateTour = catchAsync(async (req,res,next) => { 
         const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
             new: true,
             runValidators: true,
         })
+
+        if (!tour) {
+            return next(new AppError("No tour found with the Id", 404))
+        }
+
         res.status(200).json({
             status: "success",
             result: 1,
@@ -70,62 +63,34 @@ exports.updateTour = async (req,res) => {
                 tour
             }
         })
+})
+
+exports.deleteTour = catchAsync(async (req,res,next) => {
+    // console.log("hre", req.params)
+    const tour = await Tour.findByIdAndDelete({ _id : req.params.id })
+
+    if (!tour) {
+        return next(new AppError("No tour found with the Id", 404))
     }
-    catch(err) {
-        res.status(500).json({
-            status: "error",
-            message: `Something went wrong ${err}`
-        })
-    }
-    
-}
 
-exports.deleteTour = async (req,res) => {
-    console.log("hre", req.params)
-    try {
-        await Tour.findByIdAndDelete({ _id : req.params.id })
-        res.status(204).json({
-            status: "success",
-            data: null
-        })
-    }
-    catch(err) {
-        res.status(500).json({
-            status: "error",
-            message: `Something went wrong ${err}`
-        })
-    }
-  
-}
+    res.status(204).json({
+        status: "success",
+        data: null
+    })
+})
 
 
-//Creating higher order function, this function hold all the catch block
-// in every controller
-
-
-
-
-exports.createTour = async(req,res) => {
-
-    try {
+exports.createTour = catchAsync(async(req,res,next) => {
         const tour = await Tour.create(req.body)
         res.status(201).json({
             status: "success",
             data: {
                 tour
             }
-        })
-    }
-    catch(err) {
-        res.status(500).json({
-            status: "error",
-            message: `Something went wrong ${err}`
-        })
-    }
-}
+        })  
+})
 
-exports.getTourStats = async (req,res) => {
-    try {
+exports.getTourStats = catchAsync(async (req,res,next) => {
         // this is the aggregation pipeline, it just a regular query
         // Each document dadaan sa pipeline nayan
         // the data goes to the pipeline at different stages
@@ -170,20 +135,12 @@ exports.getTourStats = async (req,res) => {
                 stats
             }
         })
-    }
-    catch(err) {
-        res.status(500).json({
-            status: "error",
-            message: `Something went wrong ${err}`
-        })
-    }
-}
+})
 
 //this function calculate which month is the most busy
 // to calculate that, determine how many tours in a month, 
 // the highest number of tours in a certain month is the most busy
-exports.getMonthlyPlan = async (req,res) => {
-    try {
+exports.getMonthlyPlan = catchAsync(async (req,res,next) => {
         const year = req.params.year * 1
 
         const plan = await Tour.aggregate([
@@ -225,14 +182,7 @@ exports.getMonthlyPlan = async (req,res) => {
                 plan
             }
         })
-    }
-    catch(err) {
-        res.status(500).json({
-            status: "error",
-            message: `Something went wrong ${err}`
-        })
-    }
-}
+})
 
 
 

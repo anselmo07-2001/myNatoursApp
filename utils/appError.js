@@ -4,6 +4,7 @@ class AppError extends Error {
         super(message)
         this.statusCode = statusCode
         this.status = `${this.statusCode}`.startsWith("4") ? "fail" : "error"
+        this.isOperationError = true
 
         //capturing the stack traces but not the class and the instance
         // the argument pass, this will not be added to the error stack traces 
