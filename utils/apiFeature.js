@@ -1,14 +1,14 @@
 class APIFeatures {
     constructor(queryObject, queryString) {
-        this.queryObject = queryObject // Tour()
+        console.log(queryObject)
+        this.queryObject = queryObject // Tour() -> ito yung model
         this.queryString = queryString // req.query
     }
 
     filter() {
         let query = {...this.queryString}
         const excludeQuery = ["sort", "page", "limit", "fields"]
-        excludeQuery.forEach((value) => delete query[value])
-        console.log(query)
+        excludeQuery.forEach((value) => delete query[value]) //Why do we exclude them?
      
         //Advance filtering
         query = JSON.stringify(query)

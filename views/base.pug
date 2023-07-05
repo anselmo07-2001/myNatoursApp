@@ -1,0 +1,40 @@
+doctype html 
+html 
+    head 
+        
+        block head
+            // naserve up sa public dir sa app.js kaya ganito yung path address nila
+            // sa href dapat naka absolute path
+            title= title
+            link(rel='stylesheet' href='/css/style.css')
+            link(rel='shortcut icon' type='image/png', href='/img/favicon.png')
+            link(href='https://fonts.googleapis.com/css?family=Lato:300,300i,700', rel='stylesheet')
+            meta(charset='UTF-8')
+            meta(name='viewport' content='width=device-width' initial-scale='1.0')
+
+    body
+        // Header Section
+        include _header
+     
+        //Content Section
+        block content
+            h1 this a h1 placeholder
+
+
+        //Footer Section
+        include _footer
+        script(src='/js/bundle.js')
+        //- script(src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js")
+        //- script(src='/js/mapbox.js')
+        //- script(src="/js/login.js") 
+        //- block mapboxScript
+
+
+
+
+
+      
+        
+     
+     
+
