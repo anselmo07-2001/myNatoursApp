@@ -2,12 +2,16 @@ import "@babel/polyfill"
 import { login, logout } from "./login"
 import { displayMap } from "./mapbox.js"
 import { updateSettings } from "./updateSettings.js"
+import { bookTour } from "./stripe.js"
+import { showAlert } from "./alert"
 
 const form = document.querySelector(".form--login")
 const formSettings = document.querySelector(".form-user-data")
 const map = document.getElementById("map")
 const logoutBtn = document.querySelector(".nav__el--logout")
 const formPasswordSettings = document.querySelector(".form-user-password-settings")
+const bookTourBtn = document.getElementById("book-tour")
+
 
 if (form) {
     form.addEventListener("submit", (e) => {
@@ -57,6 +61,22 @@ if (formPasswordSettings) {
 		newPassword.value = ""
 		newPasswordConfirm.value = ""
 		document.querySelector(".btn-save-password").textContent = "SAVE PASSWORD"
+    })
+}
+
+if (bookTourBtn) {
+    bookTourBtn.addEventListener("click", async (e) => {
+        e.target.textContent = "Processing..."
+        const { tourId } = e.target.dataset
+        console.log("1. tourId ->", tourId)
+
+        try {
+            await bookTour(tourId)
+            e.target.textContent = "Book Tour"
+        }
+        catch(err) {
+            showAlert("error", err)
+        }
     })
 }
 

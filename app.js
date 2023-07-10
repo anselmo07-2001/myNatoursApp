@@ -12,6 +12,7 @@ const userRoutes = require("./routes/userRoutes")
 const tourRoutes = require("./routes/tourRoutes")
 const reviewRoutes = require("./routes/reviewRoutes")
 const viewRoutes = require("./routes/viewRoutes")
+const bookingRoutes = require("./routes/bookingRoutes")
 
 const AppError = require("./utils/appError")
 const globalErrorHandler = require("./controllers/errorController")
@@ -78,6 +79,7 @@ app.use("/", viewRoutes)
 app.use("/api/v1/users", userRoutes)
 app.use("/api/v1/tours", tourRoutes)
 app.use("/api/v1/reviews", reviewRoutes)
+app.use("/api/v1/bookings", bookingRoutes)
 
 
 //Handling Unhandle Route
