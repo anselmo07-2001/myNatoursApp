@@ -56,7 +56,7 @@ exports.updateUserData = async(req,res) => {
         runValidators: true
     })
 
-    console.log("updatedUser ->", updatedUser)
+
 
     res.status(200).render("accountTemplate", {
         user: updatedUser
@@ -71,7 +71,6 @@ exports.getMyTours = async(req,res,next) => {
     const toursId = await bookings.map(booking => booking.tour)
 
     const tours = await Tour.find({_id : { $in : toursId} })
-    console.log("tours ->",tours)
 
     res.status(200).render("overview", {
         tours,

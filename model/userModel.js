@@ -82,8 +82,6 @@ userSchema.pre(/^find/, function(next) {
 
 
 userSchema.methods.isPasswordCorrect = async (candidatePassword, userPassword) => {
-    console.log("user Password: ", candidatePassword, "real pw", userPassword)
-    console.log("result ->", await bcrypt.compare(candidatePassword, userPassword))
     return await bcrypt.compare(candidatePassword, userPassword)
 }
 
@@ -100,8 +98,6 @@ userSchema.methods.isPasswordChangedAfterTokenIssued = function (jwttimestamp) {
 
 userSchema.methods.createPasswordResetToken = function() {
     const resetToken = crypto.randomBytes(32).toString("hex")
-    console.log("token ->", resetToken)
-
     //hash the resetToken
     const hashResetToken = crypto.createHash("sha256").update(resetToken).digest("hex")
 

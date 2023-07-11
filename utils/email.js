@@ -4,7 +4,7 @@ const htmlToText = require("html-to-text")
 
 module.exports = class Email {
     constructor(user, url) {
-        console.log(user, url)
+
         this.to = user.email
         this.firstName = user.name.split(" ")[0]
         this.url = url
@@ -14,7 +14,6 @@ module.exports = class Email {
     createTransport() {
         if (process.env.NODE_ENV === "production") {
             //NOTE: There are services that are predefined na, like si sendGrid
-            console.log("hit production")
             return nodemailer.createTransport({
                 service: "SendGrid",
                 auth: {

@@ -256,7 +256,7 @@ exports.getToursWithin = catchAsync(async (req,res,next) => {
     const tours = await Tour.find({ 
         startLocation : { $geoWithin: { $centerSphere : [[lng,lat], radius]}}
     })
-    console.log("radius ->, ", radius)
+    
 
     res.status(200).json({
         status:"success",

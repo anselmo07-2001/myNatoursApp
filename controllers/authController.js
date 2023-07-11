@@ -63,7 +63,6 @@ exports.login = catchAsync(async(req,res,next) => {
     //check if the user is exist using the email and the password is correct
     const user = await userModel.findOne({ email }).select("+password")
     if (!user || !(await user.isPasswordCorrect(password, user.password))) {
-        console.log("shittttttt")
         return next(new AppError("Incorrect Email or Password", 401))
     }
 
@@ -111,7 +110,7 @@ exports.protect = catchAsync(async(req,res,next) => {
 })
 
 exports.logout = async(req,res,next) => {
-    console.log(req.cookie)
+    // console.log(req.cookie)
 
     res.cookie("jwt", "logout", {
         maxAge: new Date(Date.now() + 10 * 1000),
@@ -144,7 +143,7 @@ exports.isLogin = async(req,res,next) => {
                 return next()
             }
 
-            console.log("current User ->", currentUser)
+        
             // storing the var into the req.locals, this will be accessible in the views(pug)
             res.locals.user = currentUser
             return next()
@@ -221,7 +220,6 @@ exports.resetPassword = catchAsync (async (req,res,next) => {
     //S1: Get yung user based sa token
     const token = req.params.token
     const hashToken = crypto.createHash("sha256").update(token).digest("hex")
-    console.log("hashing the reset token ->", hashToken)
 
     const user = await userModel.findOne({ 
         passwordResetToken : hashToken,
@@ -250,7 +248,6 @@ exports.resetPassword = catchAsync (async (req,res,next) => {
 exports.updatePassword = catchAsync(async (req,res,next) => {
     //S1: Kunin si user sa collection
     const user = await userModel.findOne({_id: req.user._id}).select("+password")
-    console.log(req.body.password)
 
     //S2: Check if the current password is correct
     const isPasswordCorrect = await user.isPasswordCorrect(req.body.currentPassword, user.password)

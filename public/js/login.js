@@ -2,11 +2,10 @@ import axios from "axios"
 import { showAlert } from "./alert"
 
 export const login = async (email, password) => {
-    console.log(email,password)
     try {
         const res = await axios({
             method: "POST",
-            url: "http://127.0.0.1:3000/api/v1/users/login",
+            url: "/api/v1/users/login",
             // the data property here, expcted email and password field kasi ito yung need
             // ng login endpoint
             data: {
@@ -30,11 +29,10 @@ export const logout = async() => {
     try {
         const res = await axios({
             method: "GET",   // GET because we only want the cookie that overwrite the current cookie
-            url: "http://127.0.0.1:3000/api/v1/users/logout",
+            url: "/api/v1/users/logout",
         })
 
         if (res.data.status === "success") {
-            console.log("logggouttting")
             location.assign("/")
         }
     }

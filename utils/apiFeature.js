@@ -1,6 +1,5 @@
 class APIFeatures {
     constructor(queryObject, queryString) {
-        console.log(queryObject)
         this.queryObject = queryObject // Tour() -> ito yung model
         this.queryString = queryString // req.query
     }
@@ -32,7 +31,6 @@ class APIFeatures {
 
     fieldLimiting() {
         if (this.queryString.fields) {
-            console.log("true", this.queryString.fields)
             const fields = this.queryString.fields.split(",").join(" ")
             this.queryObject = this.queryObject.select(fields)
         }

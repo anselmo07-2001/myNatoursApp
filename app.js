@@ -7,6 +7,7 @@ const mongoSanitizer = require("express-mongo-sanitize")
 const xssClean = require("xss-clean")
 const hpp = require("hpp")
 const cookieParser = require("cookie-parser")
+const compression = require("compression")
 
 const userRoutes = require("./routes/userRoutes")
 const tourRoutes = require("./routes/tourRoutes")
@@ -27,7 +28,7 @@ app.use(express.static(path.join(__dirname, "public")))
 
 
 
-console.log(process.env.NODE_ENV)
+console.log("Stage: ",process.env.NODE_ENV)
 if (process.env.NODE_ENV === "development") {
     // app.use(morgan("dev"))
 }
@@ -62,6 +63,8 @@ app.use(hpp({
     whitelist: ["duration","ratingsQuantity","ratingsAverage","maxGroupSize","difficulty","price"]
 }))
 
+// every response, it compress to smaller size
+app.use(compression())
 
 // app.use((req,res,next) => {
 //     // console.log("Hello from the middleware", req.cookies)

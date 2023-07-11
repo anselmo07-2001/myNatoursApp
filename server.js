@@ -17,7 +17,7 @@ process.on("uncaughtException", (err) => {
 const app = require("./app")
 const mongoose = require("mongoose")
 
-console.log(process.env.MONGODB_URL)
+// console.log(process.env.MONGODB_URL)
 
 // Connecting to remove DB (ATLAS)
 const DB = process.env.ATLAS_DB_REMOTE_URL.replace("<PASSWORD>", process.env.ATLAS_DB_PASSWORD)
