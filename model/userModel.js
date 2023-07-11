@@ -82,6 +82,8 @@ userSchema.pre(/^find/, function(next) {
 
 
 userSchema.methods.isPasswordCorrect = async (candidatePassword, userPassword) => {
+    console.log("user Password: ", candidatePassword, "real pw", userPassword)
+    console.log("result ->", await bcrypt.compare(candidatePassword, userPassword))
     return await bcrypt.compare(candidatePassword, userPassword)
 }
 

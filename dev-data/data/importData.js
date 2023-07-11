@@ -8,13 +8,27 @@ const Tour = require("../../model/tourModel")
 const User = require("./../../model/userModel")
 const Review = require("./../../model/reviewModel")
 
-mongoose.connect(process.env.MONGODB_URL , {
+// Connecting to Local DB
+// mongoose.connect(process.env.MONGODB_URL , {
+//     useCreateIndex: true,
+//     useUnifiedTopology:  true,
+//     useNewUrlParser: true
+// },() => {
+//     console.log("connected to db")
+// })
+
+
+// Connecting to remote DB (ATLAS)
+const DB = process.env.ATLAS_DB_REMOTE_URL.replace("<PASSWORD>", process.env.ATLAS_DB_PASSWORD)
+mongoose.connect(DB, {
     useCreateIndex: true,
     useUnifiedTopology:  true,
     useNewUrlParser: true
 },() => {
     console.log("connected to db")
 })
+
+
 
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/tours.json`, "utf-8"))
 const reviews = JSON.parse(fs.readFileSync(`${__dirname}/reviews.json`, "utf-8"))
