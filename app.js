@@ -8,6 +8,7 @@ const xssClean = require("xss-clean")
 const hpp = require("hpp")
 const cookieParser = require("cookie-parser")
 const compression = require("compression")
+const cors = require("cors")
 
 const userRoutes = require("./routes/userRoutes")
 const tourRoutes = require("./routes/tourRoutes")
@@ -32,6 +33,22 @@ console.log("Stage: ",process.env.NODE_ENV)
 if (process.env.NODE_ENV === "development") {
     // app.use(morgan("dev"))
 }
+
+
+// Access-Control-Allow-Origin *
+// this only work in simple request (GET/POST)
+// non simple request(PUT/PATCH/DELETE) required pre flight phase
+app.use(cors())
+
+// Handling non simple request
+// options is an another HTTP methods
+app.options("*", cors())
+// app.options("/api/v1/tours/:id", cors()) //accept only specific route to perform non simple request
+
+// You can specify only website, for ex: hindi same ang domain ng frontend sa backend
+// app.use(cors({
+//     origin: //domain
+// }))
 
 
 //Set security http header
