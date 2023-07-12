@@ -1,11 +1,12 @@
 import "@babel/polyfill"
-import { login, logout } from "./login"
+import { login, logout, signUp } from "./login"
 import { displayMap } from "./mapbox.js"
 import { updateSettings } from "./updateSettings.js"
 import { bookTour } from "./stripe.js"
 import { showAlert } from "./alert"
 
 const form = document.querySelector(".form--login")
+const signupForm = document.querySelector(".form--signup")
 const formSettings = document.querySelector(".form-user-data")
 const map = document.getElementById("map")
 const logoutBtn = document.querySelector(".nav__el--logout")
@@ -75,6 +76,22 @@ if (bookTourBtn) {
         catch(err) {
             showAlert("error", err)
         }
+    })
+}
+
+if (signupForm) {
+    signupForm.addEventListener("submit", async (e) => {
+        e.preventDefault()
+        const btnCreateAccount = document.getElementById("btn-createAccount")
+        btnCreateAccount.textContent = "Processing..."
+
+        const name = document.getElementById("name").value
+        const email = document.getElementById("email").value
+        const password = document.getElementById("password").value
+        const passwordConfirm = document.getElementById("confirmPassword").value
+
+        await signUp({name,email,password,passwordConfirm})
+        btnCreateAccount.textContent = "Success"
     })
 }
 

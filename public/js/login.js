@@ -40,3 +40,24 @@ export const logout = async() => {
         showAlert("error",err.response.data.message)
     }    
 }
+
+
+export const signUp = async(userData) => {
+    try {
+        const res = await axios({
+            method: "POST",
+            url: "/api/v1/users/signup",
+            data: userData
+        })
+        
+        if (res.data.status === "success") {
+            showAlert("success","Login successfully")
+            window.setTimeout(() => {
+                location.assign("/")
+            },1500)
+        } 
+    }
+    catch(err) {
+        showAlert("error",err.response.data.message)
+    }    
+}

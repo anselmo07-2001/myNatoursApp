@@ -38,6 +38,12 @@ exports.getLoginForm = async(req,res) => {
     })
 }
 
+exports.getSignUpForm = async(req,res) => {
+    res.status(200).render("signupForm", {
+        title: "Sign up your account"
+    })
+}
+
 
 exports.getAccount = async(req,res) => {
     
