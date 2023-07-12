@@ -26,7 +26,7 @@ exports.getCheckoutSession = catchAsync(async(req,res,next) => {
                     product_data: {
                         name: `${tour.name} Tour`,
                         description: tour.summary,
-                        images: ["https://images.pexels.com/photos/1371360/pexels-photo-1371360.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"],
+                        images: [`https://mynatours-fjyk.onrender.com/img/tours/${tour.imageCover}`],
                     },
                     unit_amount:  tour.price * 100 //amount property accept by cents
                 },
