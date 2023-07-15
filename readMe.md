@@ -1,5 +1,6 @@
 ## Natours Application
 Build using modern technologies: Node.js, Express.js, Mongo DB, Mongoose
+
 Live Demo: https://mynatours-fjyk.onrender.com/
 
 Features of the web application:
