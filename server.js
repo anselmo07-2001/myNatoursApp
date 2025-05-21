@@ -19,8 +19,10 @@ const mongoose = require("mongoose")
 
 // console.log(process.env.MONGODB_URL)
 
-// Connecting to remove DB (ATLAS)
-const DB = process.env.ATLAS_DB_REMOTE_URL.replace("<PASSWORD>", process.env.ATLAS_DB_PASSWORD)
+const localDB = process.env.MONGODB_URL;
+const remoteDB = process.env.ATLAS_DB_REMOTE_URL.replace("<PASSWORD>", process.env.ATLAS_DB_PASSWORD);
+
+const DB = process.env.NODE_ENV === 'production' ? remoteDB : localDB;
 
 
 mongoose.connect(DB, {
